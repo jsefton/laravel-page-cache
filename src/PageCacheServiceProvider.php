@@ -3,6 +3,9 @@ namespace Jsefton\PageCache;
 
 use Illuminate\Support\ServiceProvider;
 use JSefton\PageCache\Commands\ClearPageCache;
+use JSefton\PageCache\CacheObserver;
+use Parallax\Expose\Pages\Page;
+use Parallax\Expose\Pages\PageElement;
 
 class PageCacheServiceProvider extends ServiceProvider
 {
@@ -13,6 +16,12 @@ class PageCacheServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if ($observers = config('pagecache.observers')) {
+            foreach ($observers as $observer) {
+                $observer::observe(CacheObserver::class);
+            }
+        }
+
         // Configuration
         $this->publishes([
             __DIR__.'/../config/' => config_path(),
@@ -22,6 +31,8 @@ class PageCacheServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../storage' => storage_path('page_cache'),
         ], 'pagecache.storage');
+
+
     }
 
     /**

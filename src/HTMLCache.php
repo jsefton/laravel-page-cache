@@ -63,10 +63,8 @@ class HTMLCache
         // Disable debugbar
         app('debugbar')->disable();
 
-        // Send the already existing request to get the final return content
-        $closure = $this->next;
-        $response = $closure($this->request);
-        $contents = $response->getContent();
+        $this->getResponse();
+        $contents = $this->contents;
 
         // Minify HTML if enabled.
         // Note: if you change this setting you have to clear the entire cache.
@@ -77,11 +75,22 @@ class HTMLCache
         $this->contents = $contents;
     }
 
+    public function getResponse()
+    {
+        // Send the already existing request to get the final return content
+        $closure = $this->next;
+        $response = $closure($this->request);
+        $this->contents = $response->getContent();
+    }
+
     /**
      * Method called to standardise inline with Response methods
      */
     public function getContent()
     {
+        if (in_array($this->path, config('pagecache.exclude'))) {
+            $this->bypassCache();
+        }
         $this->checkStorage();
         $this->render();
     }
@@ -93,6 +102,16 @@ class HTMLCache
     {
         echo $this->contents;
         exit;
+    }
+
+    /**
+     *
+     */
+    public function bypassCache()
+    {
+        header("X-Page-Cache: false");
+        $this->getResponse();
+        $this->render();
     }
 
     /**

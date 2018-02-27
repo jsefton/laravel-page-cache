@@ -2,8 +2,8 @@
 
 namespace JSefton\PageCache\Http\Middleware;
 
+use Auth;
 use Closure;
-use Illuminate\Contracts\Auth\Authenticatable;
 use JSefton\PageCache\HTMLCache;
 
 class PageCache
@@ -35,8 +35,8 @@ class PageCache
      */
     public function handle($request, Closure $next)
     {
-        // Only use caching templates when not logged in
-        if (!app(Authenticatable::class)) {
+        // Only use caching templates when not logged in and request is GET method
+        if (!Auth::check() && $request->method() == 'GET') {
             $cacher = new HTMLCache($request, $next, $request->path(),$request->getQueryString());
             $cacher->getContent();
         }
