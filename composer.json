@@ -1,0 +1,31 @@
+{
+  "name": "jsefton/laravel-page-cache",
+  "type": "library",
+  "description": "Page cache for Laravel applications to improve site speed",
+  "keywords": ["laravel","php","page","cache", "static", "speed"],
+  "homepage": "https://github.com/jsefton/laravel-page-cache",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Jamie Sefton",
+      "email": "info@jamie-sefton.co.uk"
+    }
+  ],
+  "require": {},
+  "archive": {
+    "exclude": [
+      "/tests",
+      "tests",
+      "tests/*.*",
+      "phpunit.xml",
+      ".gitignore",
+      ".gitattributes",
+      "README.md"
+    ]
+  },
+  "autoload": {
+    "psr-4": {
+      "JSefton\\PageCache\\": "src/"
+    }
+  }
+}
