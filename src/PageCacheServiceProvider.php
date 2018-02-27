@@ -2,6 +2,7 @@
 namespace Jsefton\PageCache;
 
 use Illuminate\Support\ServiceProvider;
+use JSefton\PageCache\Commands\ClearPageCache;
 
 class PageCacheServiceProvider extends ServiceProvider
 {
@@ -12,7 +13,10 @@ class PageCacheServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-       //
+        // Configuration
+        $this->publishes([
+            __DIR__.'/../config/' => config_path(),
+        ], 'pagecache.config');
     }
 
     /**
@@ -22,6 +26,13 @@ class PageCacheServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton('command.pagecache.clear', function ($app) {
+            return new ClearPageCache();
+        });
+
+        // Register commands
+        $this->commands([
+            'command.pagecache.clear'
+        ]);
     }
 }
