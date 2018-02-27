@@ -118,7 +118,7 @@ class HTMLCache
      */
     protected function generateHash()
     {
-        $hash = str_replace("/","_",$this->path) . "_" . md5($this->path);
+        $hash = str_replace("/","_",$this->path) . "_" . md5($this->path . $this->queryString);
         $this->hash = $hash;
     }
 
