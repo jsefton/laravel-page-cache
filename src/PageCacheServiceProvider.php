@@ -17,6 +17,11 @@ class PageCacheServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../config/' => config_path(),
         ], 'pagecache.config');
+
+        // Create temp folder needed
+        $this->publishes([
+            __DIR__.'/../storage' => storage_path('page_cache'),
+        ], 'pagecache.storage');
     }
 
     /**
@@ -26,6 +31,12 @@ class PageCacheServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        // Load Caching Middleware
+        if(config('pagecache.enabled')) {
+            $kernel = $this->app['Illuminate\Contracts\Http\Kernel'];
+            $kernel->pushMiddleware('JSefton\PageCache\Http\Middleware\PageCache');
+        }
+
         $this->app->singleton('command.pagecache.clear', function ($app) {
             return new ClearPageCache();
         });
