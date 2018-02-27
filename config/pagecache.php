@@ -15,8 +15,5 @@ return [
     /**
      * Models that should be observed and cache cleared upon data change
      */
-    'observers'     => [
-        Parallax\Expose\Pages\Page::class,
-        Parallax\Expose\Pages\PageElement::class
-    ]
+    'observers'     => []
 ];
