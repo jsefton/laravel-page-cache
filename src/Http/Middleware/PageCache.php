@@ -37,8 +37,8 @@ class PageCache
     {
         // Only use caching templates when not logged in and request is GET method
         if (!Auth::check() && $request->method() == 'GET') {
-            $cacher = new HTMLCache($request, $next, $request->path(),$request->getQueryString());
-            $cacher->getContent();
+            $cache = new HTMLCache($request, $next, $request->path(), $request->getQueryString());
+            $cache->getContent();
         }
         return $next($request);
     }

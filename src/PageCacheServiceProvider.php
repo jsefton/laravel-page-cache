@@ -4,8 +4,6 @@ namespace Jsefton\PageCache;
 use Illuminate\Support\ServiceProvider;
 use JSefton\PageCache\Commands\ClearPageCache;
 use JSefton\PageCache\CacheObserver;
-use Parallax\Expose\Pages\Page;
-use Parallax\Expose\Pages\PageElement;
 
 class PageCacheServiceProvider extends ServiceProvider
 {

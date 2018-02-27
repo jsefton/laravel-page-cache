@@ -49,8 +49,7 @@ class HTMLCache
         $this->path = $path;
         $this->queryString = $queryString;
         $this->generateHash();
-        $storage_folder = storage_path() .  $this->storage_folder;
-        $this->storage_path = $storage_folder;
+        $this->storage_path = storage_path() .  $this->storage_folder;
     }
 
     public function createCache()
@@ -105,7 +104,7 @@ class HTMLCache
     }
 
     /**
-     *
+     * Bypass cache and proceed as normal
      */
     public function bypassCache()
     {
@@ -136,7 +135,7 @@ class HTMLCache
         // Check if the page has already been generated
         if(file_exists($path . "/" . $filename)){
             if(strpos($this->queryString,"cache=true") === false){
-                $createdAt = date("Y-m-d H:i:s",filemtime($path . "/" . $filename));
+                $createdAt = date("Y-m-d H:i:s", filemtime($path . "/" . $filename));
                 header("X-Page-Cache: true");
                 header("X-Page-Cache-File: " . $filename);
                 header("X-Page-Cache-Created: " . $createdAt);
