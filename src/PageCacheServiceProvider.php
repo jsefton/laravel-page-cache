@@ -14,9 +14,9 @@ class PageCacheServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if ($observers = config('pagecache.observers')) {
-            foreach ($observers as $observer) {
-                $observer::observe(CacheObserver::class);
+        if ($models = config('pagecache.models')) {
+            foreach ($models as $model) {
+                $model::observe(CacheObserver::class);
             }
         }
 
